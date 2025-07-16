@@ -9,7 +9,7 @@ import (
 
 type ObjHandler interface {
 	DocsActivity(w http.ResponseWriter, r *http.Request)
-	DocsActivityToken(w http.ResponseWriter, r *http.Request)
+	DocsActivityID(w http.ResponseWriter, r *http.Request)
 }
 
 type objHandler struct {
@@ -25,7 +25,7 @@ func (h *objHandler) DocsActivity(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	switch r.Method {
 	case http.MethodPost:
-		err := h.objService.UploadObject(w, r, h.authService)
+		err := h.objService.UploadObject(w, r)
 		if err != nil {
 			apiError.BackendErrorWrite(w, err)
 		}
@@ -39,7 +39,7 @@ func (h *objHandler) DocsActivity(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (h *objHandler) DocsActivityToken(w http.ResponseWriter, r *http.Request) {
+func (h *objHandler) DocsActivityID(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	switch r.Method {
 	case http.MethodGet:

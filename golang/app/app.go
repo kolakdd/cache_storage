@@ -18,10 +18,11 @@ func App(db *sql.DB, cache *redis.Client, amqp *amqp.Channel, s3 *s3.S3) {
 	objRepo := repo.NewObjRepo(db)
 	accessRepo := repo.NewAccessRepo(db)
 
+	storageRepo := repo.NewStorageRepo(s3)
 	queueRepo := repo.NewQueueRepo(amqp)
 
 	authService := services.NewAuthService(authRepo)
-	objService := services.NewObjService(objRepo, accessRepo, queueRepo)
+	objService := services.NewObjService(objRepo, accessRepo, queueRepo, storageRepo, authService)
 
 	mux := http.NewServeMux()
 
@@ -34,7 +35,7 @@ func App(db *sql.DB, cache *redis.Client, amqp *amqp.Channel, s3 *s3.S3) {
 	objHandler := handlers.NewObjectHandler(objService, authService)
 
 	mux.HandleFunc("/api/docs", objHandler.DocsActivity)
-	mux.HandleFunc("/api/docs/{id}", objHandler.DocsActivityToken)
+	mux.HandleFunc("/api/docs/{id}", objHandler.DocsActivityID)
 
 	err := http.ListenAndServe(":8090", mux)
 	log.Fatal(err)

@@ -9,12 +9,12 @@ import (
 type (
 	RegisterDto struct {
 		Token string `json:"token"`
-		Login string `json:"login" validator:"min=8, regexp=^[a-zA-Z0-9]+$"`
-		Pswd  string `json:"pswd" validator:"min=8"`
+		Login string `json:"login""`
+		Pswd  string `json:"pswd"`
 	}
 	AuthDto struct {
 		Login string `json:"login"`
-		Pswd  string `json:"pswd" validator:"min=8"`
+		Pswd  string `json:"pswd"`
 	}
 	AuthResponse struct {
 		Token string `json:"token"`

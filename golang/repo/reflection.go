@@ -23,6 +23,8 @@ import (
 //		CreatedAt    *time.Time `json:"createdAt" db:"created_at"`
 //		UpdatedAt    *time.Time `json:"updatedAt" db:"updated_at"`
 //	}
+//
+// Сделано в качестве эксперемента
 func CRUDCreate[T models.Cruded](db *sql.DB, model T) *apiError.BackendErrorInternal {
 	v := reflect.ValueOf(&model).Elem()
 	t := reflect.TypeOf(&model).Elem()

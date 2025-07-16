@@ -18,7 +18,6 @@ func InitDB(envRepo repo.RepositoryEnv) (db *sql.DB) {
 	err = db.Ping()
 	if err != nil {
 		log.Fatal("Error ping to database: ", err)
-
 	}
 	return db
 }

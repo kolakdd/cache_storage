@@ -31,7 +31,7 @@ func (r *accessRepo) CreateMany(tx *sql.Tx, objID uuid.UUID, grant []string) *ap
 		args[i] = fmt.Sprintf("$%d", i+1)
 		params[i] = login
 	}
-
+	// по хорошему принимать не логин, а сразу id
 	q := `SELECT id FROM "User" WHERE login IN (` + strings.Join(args, ", ") + `)`
 	rows, err := r.db.Query(q, params...)
 	if err != nil {

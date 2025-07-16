@@ -66,6 +66,10 @@ func (w *UploaderWorker) StartConsume() {
 			if err != nil {
 				fmt.Println("WORKER: Error while update flag, ", err)
 			}
+			err = os.Remove(osPath)
+			if err != nil {
+				fmt.Println("WORKER: Error while remove file, ", err)
+			}
 		}
 	}()
 }

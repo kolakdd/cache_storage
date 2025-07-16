@@ -75,10 +75,10 @@ func (s *authService) Unlogin(w http.ResponseWriter, r *http.Request) *apiError.
 	if err != nil {
 		return err
 	}
-	resonse := make(map[string]bool)
-	resonse[tokenStr] = true
+	resp := make(map[string]bool)
+	resp[tokenStr] = true
 
-	data := models.ResponseModel{Error: nil, Response: resonse, Data: nil}
+	data := models.ResponseModel{Error: nil, Response: resp, Data: nil}
 
 	jData, errM := json.Marshal(data)
 	if errM != nil {

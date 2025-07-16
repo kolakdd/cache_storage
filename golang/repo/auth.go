@@ -38,12 +38,12 @@ func (r *authRepo) CreateUser(dto *models.RegisterDto) (*models.RegisterUserRequ
 }
 
 func (r *authRepo) GetUserID(dto *models.AuthDto) (*uuid.UUID, *apiError.BackendErrorInternal) {
-	sqlStatement := `SELECT id, hash_password FROM "User" WHERE login=$1;`
+	q := `SELECT id, hash_password FROM "User" WHERE login=$1;`
 
 	var id *uuid.UUID
 	var hashPassword string
 
-	row := r.db.QueryRow(sqlStatement, dto.Login)
+	row := r.db.QueryRow(q, dto.Login)
 
 	switch err := row.Scan(&id, &hashPassword); err {
 	case sql.ErrNoRows:

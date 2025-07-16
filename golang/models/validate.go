@@ -7,7 +7,15 @@ import (
 	"github.com/kolakdd/cache_storage/golang/apiError"
 )
 
-// ValidateDecodeJSON валидирует и декудорует модель
+type Validating interface {
+	Validate() *apiError.BackendErrorInternal
+}
+
+type Cruded interface {
+	CreateCRUD()
+}
+
+// ValidateDecodeJSON валидирует и декодирует модель
 func ValidateDecodeJSON[T Validating](r *http.Request) (*T, *apiError.BackendErrorInternal) {
 	var dto T
 	if err := json.NewDecoder(r.Body).Decode(&dto); err != nil {

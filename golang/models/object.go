@@ -2,6 +2,8 @@ package models
 
 import (
 	"encoding/json"
+	"net/url"
+	"strconv"
 	"time"
 
 	"github.com/kolakdd/cache_storage/golang/apiError"
@@ -9,9 +11,24 @@ import (
 )
 
 type (
+	UserXObject struct {
+		UserID    uuid.UUID  `json:"id" db:"user_id"`
+		ObjectID  uuid.UUID  `json:"ownerId" db:"object_id"`
+		CreatedAt *time.Time `json:"createdAt" db:"created_at"`
+		UpdatedAt *time.Time `json:"updatedAt" db:"updated_at"`
+	}
+)
+
+type (
 	DataResponse struct {
 		JSON *Object `json:"json"`
 		File string  `json:"file"`
+	}
+	DocsListResponse struct {
+		Docs *[]Object `json:"docs"`
+	}
+	GetDocResponse struct {
+		URL string `json:"url"`
 	}
 
 	Object struct {
@@ -53,6 +70,31 @@ func NewObjectDB(ownerID uuid.UUID, name string, mimetype string, public bool, s
 		CreatedAt:  &now,
 		UpdatedAt:  &now,
 	}
+}
+
+type GetListObjectsDto struct {
+	UserID string `json:"userId"`
+	Login  string `json:"login"`
+	Key    string `json:"key"`
+	Value  string `json:"value"`
+	Limit  int    `json:"limit"`
+	Offset int    `json:"offset"`
+}
+
+func (dto *GetListObjectsDto) ParseValidateQuery(v url.Values) {
+	dto.Login = v.Get("login")
+	dto.Key = v.Get("key")
+	dto.Value = v.Get("value")
+	limitInt, err := strconv.Atoi(v.Get("limit"))
+	if err != nil {
+		limitInt = 50
+	}
+	dto.Limit = limitInt
+	offsetInt, err := strconv.Atoi(v.Get("offset"))
+	if err != nil {
+		limitInt = 0
+	}
+	dto.Offset = offsetInt
 }
 
 func (dto *UploadObjectDtoMeta) ParseFormData(raw string) *apiError.BackendErrorInternal {
