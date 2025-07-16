@@ -34,11 +34,9 @@ func (r queueRepo) SendUploadMessage(userID string, fileID string) *apiError.Bac
 	data := UploadQueueMessage{userID, fileID}
 	jsonBytes, err := json.Marshal(data)
 	if err != nil {
-		fmt.Println("error marshal")
 		return apiError.InternalError
 	}
 	fmt.Println("OK")
-
 	errAMQP := r.channel.PublishWithContext(ctx,
 		"",       // exchange
 		"upload", // routing key

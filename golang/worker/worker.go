@@ -64,7 +64,7 @@ func (w *UploaderWorker) StartConsume() {
 			putFile(osPath, s3Path, w.s3)
 			err = updateFlag(w.db, data.FileID)
 			if err != nil {
-				fmt.Println("Error while update flag, ", err)
+				fmt.Println("WORKER: Error while update flag, ", err)
 			}
 		}
 	}()
