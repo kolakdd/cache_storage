@@ -53,7 +53,7 @@ func (r *accessRepo) CreateMany(tx *sql.Tx, objID uuid.UUID, grant []string) *ap
 		return nil
 	}
 
-	// Строим INSERT запрос
+	// по полученным id создаем доступы
 	values := make([]string, len(userIDS))
 	insertParams := make([]interface{}, len(userIDS)+1)
 	insertParams[0] = objID
