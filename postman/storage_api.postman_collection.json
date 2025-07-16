@@ -1,0 +1,336 @@
+{
+	"info": {
+		"_postman_id": "ceefdb95-c97b-4b59-b53e-84387111b74e",
+		"name": "storage_api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28502363",
+		"_collection_link": "https://grey-desert-259781.postman.co/workspace/axum_fileshare~bc19b164-0f6f-421f-a2d5-8f8ce3531223/collection/28502363-ceefdb95-c97b-4b59-b53e-84387111b74e?action=share&source=collection_link&creator=28502363"
+	},
+	"item": [
+		{
+			"name": "register user",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "// {\n//     \"token\": \"register_token\",\n//     \"login\": \"lolker322JOKER\",\n//     \"pswd\": \"joyKER!!3222\"\n// }\n{\n    \"token\": \"register_token\",\n    \"login\": \"lolker322JOKERfriend\",\n    \"pswd\": \"joyKER!!3222\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "127.0.0.1:8090/api/register",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "auth user",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"login\": \"lolker322JOKERfriend\",\n    \"pswd\": \"joyKER!!3222\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8090/api/login",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "unlogin",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8090/api/login/{{token}}",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"login",
+						"{{token}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get list docs",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "Y4V3mCKFjVo34QlXfnpvEw==",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8090/api/docs?login=lolker322JOKER&key=mimetype&value=image/jpg&limit=10&offset=0",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"docs"
+					],
+					"query": [
+						{
+							"key": "login",
+							"value": "lolker322JOKER"
+						},
+						{
+							"key": "key",
+							"value": "mimetype"
+						},
+						{
+							"key": "value",
+							"value": "image/jpg"
+						},
+						{
+							"key": "limit",
+							"value": "10"
+						},
+						{
+							"key": "offset",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "HEAD list docs",
+			"request": {
+				"method": "HEAD",
+				"header": [
+					{
+						"key": "token",
+						"value": "zjuBfXB67vRuMiCbMmBQtg==",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8090/api/docs?login=lol2&key=mimetype&value=image/jpg&limit=2&offset=1",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"docs"
+					],
+					"query": [
+						{
+							"key": "login",
+							"value": "lol2"
+						},
+						{
+							"key": "key",
+							"value": "mimetype"
+						},
+						{
+							"key": "value",
+							"value": "image/jpg"
+						},
+						{
+							"key": "limit",
+							"value": "2"
+						},
+						{
+							"key": "offset",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "upload doc",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "postman-cloud:///1ef98948-3d87-4ec0-9a53-1664cd8802ff"
+						},
+						{
+							"key": "meta",
+							"value": "{\n        \"name\": \"abc.png\",\n        \"file\": true,\n        \"public\": false,\n        \"token\": \"FII9zVnFxw0qooyCKwJatA==\",\n        \"mime\": \"image/jpg\",\n        \"grant\": [\n            \"typeYourFriend\", \"lolker322JOKERfriend\", \"LOLKER\"\n        ]\n    }",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8090/api/docs",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"docs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get one doc",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "FII9zVnFxw0qooyCKwJatA==",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8090/api/docs/819b7328-2db9-4837-96a4-0918300966a3",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"docs",
+						"819b7328-2db9-4837-96a4-0918300966a3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "HEAD one doc",
+			"request": {
+				"method": "HEAD",
+				"header": [
+					{
+						"key": "token",
+						"value": "zjuBfXB67vRuMiCbMmBQtg==",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8090/api/docs/15b3cf96-822e-490d-86af-e774e4b75256",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"docs",
+						"15b3cf96-822e-490d-86af-e774e4b75256"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "del doc",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "token",
+						"value": "zjuBfXB67vRuMiCbMmBQtg==",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8090/api/docs/ce235960-2740-49e4-ae23-142c6d4bf074",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"docs",
+						"ce235960-2740-49e4-ae23-142c6d4bf074"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

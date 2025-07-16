@@ -2,21 +2,24 @@ version: '3.8'
 
 services:
   app:
-    build: ./golang
+    build: .
     container_name: golang_app
     env_file:
-      - ../.env
+      - .env.overwrite
     expose:
       - "8080"
     depends_on:
-      - minio
-      - postgres
-
+      minio:
+        condition: service_started
+      postgres:
+        condition: service_healthy
+    ports:
+      - 8090:8090
   minio:
     image: quay.io/minio/minio
     command: server /data --console-address ":9001"
     env_file:
-      - ../.env
+      - .env.overwrite
     volumes:
       - minio_data:/data
     ports:
@@ -27,19 +30,24 @@ services:
     image: postgres:17-alpine
     restart: always
     env_file:
-      - ../.env
+      - .env.overwrite
     ports:
       - "5432:5432"
     volumes:
-      - auth_template:/var/lib/postgresql/data
+      - cache_storage:/var/lib/postgresql/data
       - ./initdb:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
   rabbitmq:
     image: rabbitmq:3.10.7-management
     hostname: rabbitmq
     restart: always
     env_file:
-      - ../.env
+      - .env.overwrite
     ports:
       - "5672:5672" #  AMQP
       - 15672:15672
@@ -55,6 +63,7 @@ services:
       - redis_data:/data
 
 volumes:
+  cache_storage:
   minio_data:
   postgres_data:
   rabbitmq_data:
